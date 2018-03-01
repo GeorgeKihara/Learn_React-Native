@@ -1,20 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableHighlight } from 'react-native';
+import { StyleSheet, 
+    Text, 
+    View, 
+    TextInput, 
+    TouchableHighlight,
+    Button  } from 'react-native';
 
 export class Todo extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: [1,2,3,5,6],
+      todos: [],
       newTodo: ''
     }
   }
   handleChange(e) {
-    const { value } = e.target;
-    this.setState({newTodo: value})
+    this.setState({newTodo: e})
   }
   handlePress(){
-    this.setState({newTodo: "congrats"})
+    const todos = [...this.state.todos, this.state.newTodo]
+    this.setState({todos, newTodo: ''})
   }
   handlePress1(){
     this.setState({newTodo: ''})
@@ -23,14 +28,14 @@ export class Todo extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput value={this.state.newTodo} onChange={this.handleChange.bind(this)}></TextInput>
+        <TextInput value={this.state.newTodo} onChangeText={this.handleChange.bind(this)}></TextInput>
         <TouchableHighlight onPress={this.handlePress.bind(this)}>
           <Text>Click me</Text>
         </TouchableHighlight>
         <TouchableHighlight onPress={this.handlePress1.bind(this)}>
           <Text>Reset</Text>
         </TouchableHighlight>
-        {this.state.todos.map(todo => <Text>{todo}</Text>)}
+        {this.state.todos.map((todo, i) => <Text key={i}>{todo}</Text>)}
       </View>
     );
   }
@@ -39,7 +44,7 @@ export class Todo extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffff00',
     alignItems: 'center',
     justifyContent: 'center',
   },
